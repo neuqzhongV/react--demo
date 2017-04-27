@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function f1() {
+            return new Promise(function (ok, no) {
+                setTimeout(function () {
+                    ok('1-锄禾日当午！');
+                }, 3000);
+            });
+        }
+
+        function f2(){
+            return new Promise(function (ok, no) {
+                setTimeout(function () {
+                    ok('2-复方草珊瑚！');
+                }, 2000);
+            });
+        }
+
+        function f3(){
+            return new Promise(function (ok, no) {
+                setTimeout(function () {
+                    ok('1-荆轲刺秦王！');
+                }, 1000);
+            });
+        }
+
+
+        // 需求:3秒执行一个异步操作，当这个操作执行完毕之后，再过2秒执行另一个异步操作，当第二个操作执行完毕，再过1秒，执行第三个异步操作
+        // *******当调用包含promise对象的函数的时候，这个异步操作并没执行完成，我们通过.then的形式，预先为这个异步操作，指定了成功和失败的回调函数！！！
+        f1().then(function(result){
+            console.log(result);
+            // 执行第二个异步操作
+            var promise2 = f2();
+            return promise2;
+        }).then(function(result2){ // 第二个then，处理的是上一个then中返回的promise对象
+            console.log(result2);
+
+            var promise3 = f3();
+            return promise3;
+        }).then(function(result3){ // 第三个then，处理的是第二个then中返回的promise对象
+            console.log(result3);
+        });
+    </script>
+</body>
+
+</html>

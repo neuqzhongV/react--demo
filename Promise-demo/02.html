@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 创建一个异步的对象，并立即执行这个异步操作
+        // 就是说：每当我们new一个异步操作对象的时候，就会立即执行这个对象所表示的异步操作；
+        // 问题：我想让这个异步操作，在指定的时候才进行调用
+        /*var promise = new Promise(function(ok, no){
+            setTimeout(function(){
+                var result = '执行成功！'
+                ok(result);
+            }, 3000);
+        });
+
+        // 给异步的操作，预先指定成功或失败的回调函数
+        promise.then(function(result){
+            console.log(result);
+        });*/
+
+
+
+        function f1() {
+            return new Promise(function (ok, no) {
+                setTimeout(function () {
+                    var result = '执行成功！'
+                    ok(result);
+                }, 3000);
+            });
+            // return promise;
+        }
+
+        // 给异步的操作，预先指定成功或失败的回调函数
+        // promise.then(function (result) {
+        //     console.log(result);
+        // });
+
+        // 将异步操作对象，封装到函数内部去new，这样，就能实现按需调用这些异步操作了
+        f1().then(function(result){
+            console.log(result);
+        });
+    </script>
+</body>
+
+</html>

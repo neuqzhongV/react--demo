@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    //Promise
+    <script>
+        // 下一次的Ajax请求依赖于上一次的Ajax请求结果
+        // 传统这种回调函数模式，代码嵌套层级太深，而且不利于阅读，更重要的是，复用不强！
+        $.get('url1',function(data1){
+            console.log(data1);
+
+            $.get('url2', function(data2){
+                console.log(data2);
+            });
+        });
+
+        // 1, Promise是一个异步代码规范，表示做一个异步的操作；
+        // Promise是一个构造函数，如果要用的话，需要先new一个Promise对象；在这个构造函数的原型上，有一个then方法，所以，可以通过new出来的实例，来调用这个then方法；
+        // 既然是一个异步的事情，那么，我们知道它什么时候结束吗？？？
+        // 但是，我们肯定知道，做的这个异步的事情，肯定有一个结果，要么这件事成功了!要么失败了！！
+        // 所以，我们可以在这件异步的事情正在执行的时候，就预先为执行的结果，指定两个回调函数，一个是成功的回调函数，另一个失败的回调函数；
+
+        var promise = new Promise(function(ok, no){
+            // 模拟一个异步的操作......
+            var result = 1; // 假设result就是我们拿到的操作结果；
+
+            if(/*异步操作成功*/){
+                ok(result);
+            }else{
+                //操作失败
+                no(result);
+            }
+
+        }); // 这个对象就代表是一个异步的操作
+
+        // promise.then(成功回调函数, 失败的回调函数);
+        // 在调用promise实例上的then方法的时候，必须指定成功的回调函数，但是失败的回调函数可以不指定
+        promise.then(function(result){
+            console.log('OK'+result);
+        }, function(err){
+            console.log('NO'+result);
+        });
+    </script>
+</body>
+</html>
